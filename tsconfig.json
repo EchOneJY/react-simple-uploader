@@ -1,0 +1,10 @@
+{
+  "extends": "./src/.umi/tsconfig.json",
+  "include": [
+    "packages/**/*.ts",
+    "packages/**/*.tsx",
+    "packages/**/*.d.ts",
+    "types/**/*.d.ts",
+    "typings.d.ts"
+  ]
+}
