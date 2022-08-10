@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import events from './file-events';
 import { secondsToStr } from '../utils';
 
-type ProgressStyleType = {
+export type ProgressStyleType = {
   progress?: string;
   WebkitTransform?: string;
   MozTransform?: string;
@@ -12,7 +12,7 @@ type ProgressStyleType = {
   transform?: string;
 };
 
-type FileType = {
+export type FileType = {
   file: Recordable;
   list: boolean;
 } & React.HTMLAttributes<HTMLDivElement>;

@@ -2,11 +2,11 @@ import React from 'react';
 import UploaderFile from '../file';
 import styles from './index.less';
 
-type UploaderListType = {
+type UploaderFilesType = {
   fileList: Recordable;
 } & React.HTMLAttributes<HTMLDivElement>;
 
-export default function UploaderList(props: UploaderListType) {
+export default function UploaderFiles(props: UploaderFilesType) {
   const { fileList, children } = props;
   return (
     <div className={styles['uploader-list']}>
