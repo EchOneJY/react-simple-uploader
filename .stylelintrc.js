@@ -1,7 +1,4 @@
 module.exports = {
-    // Umi 项目
-    extends: require.resolve('umi/stylelint'),
-    rules: {
-        'color-function-notation': null,
-    },
+  // Umi 项目
+  extends: [require.resolve('@umijs/fabric/dist/stylelint')],
 };
