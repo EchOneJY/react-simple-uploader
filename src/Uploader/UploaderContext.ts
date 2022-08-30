@@ -1,7 +1,7 @@
 import React from 'react';
 
 export type UploaderContextProps = {
-  uploader: Recordable;
+  uploader: Record<string, any>;
   support: boolean;
 };
 

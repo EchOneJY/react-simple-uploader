@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import React, { createRef, useEffect, useState } from 'react';
-import styles from './index.less';
+import './index.css';
 
 import { UploaderContext } from '../index';
 
@@ -34,7 +34,7 @@ export default function UploaderDrop(props: UploaderDropType) {
 
   return (
     <div
-      className={classNames(styles['uploader-drop'], dropClass)}
+      className={classNames('uploader-drop', dropClass, { hidden: !contextValue.support })}
       ref={dropDom}
     >
       {children}

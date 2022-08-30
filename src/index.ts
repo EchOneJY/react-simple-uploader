@@ -1,5 +1,5 @@
 import type { UploaderProps, StatusType } from './Uploader';
-import ChunkUploader from './Uploader';
+import Uploader from './Uploader';
 import UploaderBtn from './Btn';
 import UploaderDrop from './Drop';
 import type { ProgressStyleType, FileType } from './File';
@@ -13,6 +13,7 @@ export type { UploaderProps, StatusType, ProgressStyleType, FileType };
 export { UploaderContext } from './Uploader/UploaderContext';
 
 export {
+  Uploader,
   UploaderBtn,
   UploaderDrop,
   ChunkUploadFile,
@@ -21,7 +22,6 @@ export {
   UploaderUnsupport,
 };
 
-export default ChunkUploader;
-
+export default Uploader;
 
 export { default as Foo } from './Foo';

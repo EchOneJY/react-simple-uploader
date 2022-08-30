@@ -1,30 +1,29 @@
 import React, { createRef, useEffect } from 'react';
-import styles from './index.less';
+import classNames from 'classnames';
+import './index.css';
 
 import { UploaderContext } from '../index';
 
 type UploaderBtnType = {
   directory?: boolean;
   single?: boolean;
-  attrs?: Recordable;
-} & React.HTMLAttributes<HTMLDivElement>;
+  attrs?: Record<string, any>;
+} & React.HTMLAttributes<HTMLLabelElement>;
 
-const UploaderBtn = (
-  props: UploaderBtnType = { directory: false, single: false, attrs: {} },
-) => {
-  const btnDom = createRef<HTMLDivElement>();
+const UploaderBtn = (props: UploaderBtnType = { directory: false, single: false, attrs: {} }) => {
+  const btnDom = createRef<HTMLLabelElement>();
   const contextValue = React.useContext(UploaderContext);
   const { directory, single, attrs, children } = props;
 
   useEffect(() => {
     const uploader = contextValue.uploader;
-    uploader.assignDrop(btnDom.current, directory, single, attrs);
+    uploader.assignBrowse(btnDom.current, directory, single, attrs);
   }, []);
 
   return (
-    <div className={styles['uploader-btn']} ref={btnDom}>
+    <label className={classNames('uploader-btn', { hidden: !contextValue.support })} ref={btnDom}>
       {children}
-    </div>
+    </label>
   );
 };
 

@@ -1,6 +1,6 @@
-import React, { useState, useEffect, Fragment } from 'react';
+import React, { useState, useEffect, Fragment, useImperativeHandle } from 'react';
 
-import Uploader from 'simple-uploader.js';
+import SimpleUploader from 'simple-uploader.js';
 
 import UploaderList from '../List';
 import UploaderDrop from '../Drop';
@@ -8,8 +8,10 @@ import UploaderBtn from '../Btn';
 import UploaderUnsupport from '../Unsupport';
 
 import UploaderContext from './UploaderContext';
-import styles from './index.less';
+import './index.css';
 import { camelCase } from '../utils';
+
+type Recordable<T = any> = Record<string, T>;
 
 export type StatusType = {
   success: 'string';
@@ -23,8 +25,9 @@ export type UploaderProps = {
   options: Recordable;
   autoStart: boolean;
   fileStatusText: StatusType;
+  children: (props: Recordable) => React.ReactNode;
   [key: string]: any;
-} & React.HTMLAttributes<HTMLDivElement>;
+};
 
 enum UploadEventEnum {
   FILE_ADDED_EVENT = 'fileAdded',
@@ -45,27 +48,24 @@ const defaultOptions = {
   testChunks: true,
 };
 
-const { FILE_ADDED_EVENT, FILES_ADDED_EVENT, UPLOAD_START_EVENT } =
-  UploadEventEnum;
+const { FILE_ADDED_EVENT, FILES_ADDED_EVENT, UPLOAD_START_EVENT } = UploadEventEnum;
 
-const ChunkUploader = React.forwardRef((props: UploaderProps) => {
+const Uploader = React.forwardRef((props: UploaderProps, ref) => {
   const { options, fileStatusText, children } = props;
 
-  const [uploader, setUploader] = useState<Recordable>({});
+  // const [uploader, setUploader] = useState<Recordable>({});
   const [started, setStarted] = useState(false);
   const [files, setFiles] = useState<Recordable[]>([]);
   const [fileList, setFileList] = useState<Recordable[]>([]);
 
-  const curUploader = new Uploader({ ...defaultOptions, ...options });
-  curUploader.fileStatusText = fileStatusText || {
+  let uploader = new SimpleUploader({ ...defaultOptions, ...options });
+  uploader.fileStatusText = fileStatusText || {
     success: '上传成功',
     error: '上传失败',
     uploading: '上传中',
     paused: '暂停',
     waiting: '等待上传',
   };
-
-  setUploader(curUploader);
 
   function uploadStart() {
     setStarted(true);
@@ -143,6 +143,13 @@ const ChunkUploader = React.forwardRef((props: UploaderProps) => {
   uploader.on('fileRemoved', fileRemoved);
   uploader.on('filesSubmitted', filesSubmitted);
 
+  /**
+   * 暴露ref方法
+   */
+  useImperativeHandle(ref, () => ({
+    getUploader: () => uploader,
+  }));
+
   useEffect(() => {
     // const uploaderInner = uploader.uploader;
     return () => {
@@ -151,22 +158,16 @@ const ChunkUploader = React.forwardRef((props: UploaderProps) => {
       uploader.off(FILES_ADDED_EVENT, filesAdded);
       uploader.off('fileRemoved', fileRemoved);
       uploader.off('filesSubmitted', filesSubmitted);
-      setUploader({});
+      uploader = null;
     };
   }, []);
 
   return (
-    <UploaderContext.Provider
-      value={{ uploader, support: uploader.uploader.support }}
-    >
+    <UploaderContext.Provider value={{ uploader, support: uploader.uploader.support }}>
       {
-        <div className={styles.uploader}>
+        <div className="uploader">
           {children ? (
-            React.cloneElement(children as JSX.Element, {
-              fileList,
-              files,
-              started,
-            })
+            children({ fileList, files, started })
           ) : (
             <Fragment>
               <UploaderUnsupport />
@@ -184,4 +185,4 @@ const ChunkUploader = React.forwardRef((props: UploaderProps) => {
   );
 });
 
-export default ChunkUploader;
+export default Uploader;

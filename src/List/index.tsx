@@ -1,22 +1,21 @@
 import React from 'react';
 import UploaderFile from '../File';
-import styles from './index.less';
+import './index.css';
 
 type UploaderListType = {
-  fileList: Recordable;
-} & React.HTMLAttributes<HTMLDivElement>;
+  fileList: Record<string, any>;
+  children?: (props: { fileList: any }) => React.ReactNode;
+};
 
 export default function UploaderList(props: UploaderListType) {
   const { fileList, children } = props;
   return (
-    <div className={styles['uploader-list']}>
+    <div className="uploader-list">
       {children ? (
-        React.cloneElement(children as JSX.Element, {
-          fileList,
-        })
+        children({ fileList })
       ) : (
         <ul>
-          {fileList.map((file: Recordable) => (
+          {fileList.map((file: Record<string, any>) => (
             <UploaderFile key={file.id} file={file} list />
           ))}
         </ul>

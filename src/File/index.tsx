@@ -3,6 +3,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import Uploader from 'simple-uploader.js';
 import { secondsToStr } from '../utils';
 import events from './file-events';
+import './index.css';
 
 export type ProgressStyleType = {
   progress?: string;
@@ -11,6 +12,8 @@ export type ProgressStyleType = {
   msTransform?: string;
   transform?: string;
 };
+
+type Recordable<T = any> = Record<string, T>;
 
 export type FileType = {
   file: Recordable;
