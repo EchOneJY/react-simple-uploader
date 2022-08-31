@@ -1,13 +1,13 @@
-## List
+## Files
 
 文件列表
 
 #### 示例
 
 ```ts
-import { Uploader, UploaderList } from 'react-simple-uploader';
+import { Uploader, UploaderFiles } from 'react-simple-uploader';
 
-<Uploader>{({ fileList }) => <UploaderList fileList={fileList} />}</Uploader>;
+<Uploader>{({ fileList }) => <UploaderFiles fileList={fileList} />}</Uploader>;
 ```
 
 ##### 参数
@@ -18,7 +18,7 @@ import { Uploader, UploaderList } from 'react-simple-uploader';
 
 #### Render Props
 
-List 支持接收 children 自定义渲染列表，并返回以下参数：
+Files 支持接收 children 自定义渲染列表，并返回以下参数：
 
 | 参数     | 说明     | 类型  | 可选值 | 默认值 |
 | -------- | -------- | ----- | ------ | ------ |
