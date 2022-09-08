@@ -2,7 +2,7 @@
 
 文件拖拽区域
 
-#### 示例
+#### 使用
 
 ```ts
 import { UploaderDrop, UploaderBtn } from 'react-simple-uploader';

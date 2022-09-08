@@ -1,6 +1,6 @@
 ## Btn
 
-#### 示例
+#### 使用
 
 ```ts
 import { UploaderBtn } from 'react-simple-uploader';

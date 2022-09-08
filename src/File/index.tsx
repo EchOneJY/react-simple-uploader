@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { Fragment, useEffect, useRef, useState } from 'react';
 import Uploader from 'simple-uploader.js';
 import { secondsToStr } from '../utils';
 import events from './file-events';
@@ -18,7 +18,8 @@ type Recordable<T = any> = Record<string, T>;
 export type FileType = {
   file: Recordable;
   list: boolean;
-} & React.HTMLAttributes<HTMLDivElement>;
+  children?: (props: Recordable) => React.ReactNode;
+};
 
 export default function ChunkUploadFile(props: FileType) {
   const { file, list = true, children } = props;
@@ -339,63 +340,65 @@ export default function ChunkUploadFile(props: FileType) {
     };
   }, []);
 
-  return children ? (
-    React.cloneElement(props.children as JSX.Element, {
-      file,
-      list,
-      status,
-      paused,
-      error,
-      response,
-      averageSpeed,
-      formatedAverageSpeed,
-      currentSpeed,
-      isComplete,
-      isUploading,
-      size,
-      formatedSize,
-      uploadedSize,
-      progress,
-      progressStyle,
-      progressingClass,
-      timeRemaining,
-      formatedTimeRemaining,
-      type,
-      extension,
-      fileCategory,
-    })
-  ) : (
+  return (
     <div className={classNames('uploader-file', status)}>
-      <div
-        className={classNames('uploader-file-progress', progressingClass)}
-        style={{ ...progressStyle }}
-      />
-      <div className="uploader-file-info">
-        <div className="uploader-file-name">
-          <i className={classNames('uploader-file-icon', iconType)} />
-          {file.name || ''}
-        </div>
-        <div className="uploader-file-size">{formatedSize}</div>
-        <div className="uploader-file-meta" />
-        <div className="uploader-file-status">
-          {status !== 'uploading' ? <span>{statusText}</span> : null}
-          {status === 'uploading' ? (
-            <span>
-              <span>{progressStyle.progress} </span>
-              <em>{formatedAverageSpeed} </em>
-              <i>{formatedTimeRemaining}</i>
-            </span>
-          ) : null}
-        </div>
-        <div className="uploader-file-actions">
-          <span className="uploader-file-pause" onClick={pause} />
-          <span className="uploader-file-resume" onClick={resume}>
-            ️
-          </span>
-          <span className="uploader-file-retry" onClick={retry} />
-          <span className="uploader-file-remove" onClick={remove} />
-        </div>
-      </div>
+      {children ? (
+        children({
+          file,
+          list,
+          status,
+          paused,
+          error,
+          response,
+          averageSpeed,
+          formatedAverageSpeed,
+          currentSpeed,
+          isComplete,
+          isUploading,
+          size,
+          formatedSize,
+          uploadedSize,
+          progress,
+          progressStyle,
+          progressingClass,
+          timeRemaining,
+          formatedTimeRemaining,
+          type,
+          extension,
+          fileCategory,
+        })
+      ) : (
+        <Fragment>
+          <div
+            className={classNames('uploader-file-progress', progressingClass)}
+            style={{ ...progressStyle }}
+          />
+          <div className="uploader-file-info">
+            <div className="uploader-file-name">
+              <i className={classNames('uploader-file-icon', iconType)} />
+              {file.name || ''}
+            </div>
+            <div className="uploader-file-size">{formatedSize}</div>
+            <div className="uploader-file-meta" />
+            <div className="uploader-file-status">
+              {status !== 'uploading' ? <span>{statusText}</span> : null}
+              {status === 'uploading' ? (
+                <span>
+                  <span>{progressStyle.progress} </span>
+                  <em>{formatedAverageSpeed} </em>
+                  <i>{formatedTimeRemaining}</i>
+                </span>
+              ) : null}
+            </div>
+            <div className="uploader-file-actions">
+              <span className="uploader-file-pause" onClick={pause} />
+              <span className="uploader-file-resume" onClick={resume} />
+              <span className="uploader-file-retry" onClick={retry} />
+              <span className="uploader-file-remove" onClick={remove} />
+            </div>
+          </div>
+        </Fragment>
+      )}
     </div>
   );
 }

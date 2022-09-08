@@ -1,6 +1,6 @@
 ## Example
 
-Demo:
+示例:
 
 ```tsx
 import React, { Fragment, useRef, useEffect } from 'react';
@@ -36,7 +36,7 @@ export default () => {
 };
 ```
 
-#### 示例
+#### 使用
 
 ```ts
 import React, { Fragment, useRef, useEffect } from 'react';

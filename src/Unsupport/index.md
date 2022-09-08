@@ -1,12 +1,16 @@
 ## Unsupport
 
-Demo:
+浏览器是否支持
 
-```tsx
+使用:
+
+```ts
 import React from 'react';
 import { UploaderUnsupport } from 'react-simple-uploader';
 
 export default () => <UploaderUnsupport />;
 ```
 
-More skills for writing demo: https://d.umijs.org/guide/basic#write-component-demo
+#### Render Props
+
+Unsupport 支持接收 children 自定义渲染列表

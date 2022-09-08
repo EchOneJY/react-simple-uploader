@@ -1,6 +1,6 @@
 ## Uploader
 
-Demo:
+示例:
 
 ```tsx
 import React from 'react';
@@ -9,7 +9,7 @@ import ChunkUploader from 'react-simple-uploader';
 export default () => <ChunkUploader />;
 ```
 
-#### 示例
+#### 使用
 
 ```ts
 import React from 'react';

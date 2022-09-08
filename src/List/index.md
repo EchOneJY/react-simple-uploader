@@ -2,7 +2,7 @@
 
 文件列表
 
-#### 示例
+#### 使用
 
 ```ts
 import { Uploader, UploaderList } from 'react-simple-uploader';
