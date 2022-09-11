@@ -1,22 +1,29 @@
 ## 介绍
 
-## Features
+### [📚 Usage →](https://echonejy.github.io/react-simple-uploader/)
 
-- Treat Folder and File as `File`
-- Pause/Resume upload
-- Recover upload
-- Error handling
-- Drag and Drop with folder reader
-- Custom upload buttons
-- Folder Upload
-- Queue management
-- File validation
-- Upload progress
-- Time remaining
-- Chunk uploads
+## 特性
 
-## Install
+- 支持文件、多文件、文件夹上传
+
+- 支持拖拽文件、文件夹上传
+
+- 统一对待文件和文件夹，方便操作管理
+
+- 可暂停、继续上传
+
+- 错误处理
+
+- 支持“快传”，通过文件判断服务端是否已存在从而实现“快传”
+
+- 上传队列管理，支持最大并发上传
+
+- 分块上传
+
+- 支持进度、预估剩余时间、出错自动重试、重传等操作
+
+## 安装
 
 ```bash
-npm install react-simple-uploader --save
+yarn add react-simple-uploader -S
 ```

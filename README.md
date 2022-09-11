@@ -1,33 +1,3 @@
-# dumi
+# react-simple-uploader [![NPM Version][npm-image]][npm-url]
 
-## Getting Started
-
-Install dependencies,
-
-```bash
-$ npm i
-```
-
-Start the dev server,
-
-```bash
-$ npm start
-```
-
-Build documentation,
-
-```bash
-$ npm run docs:build
-```
-
-Run test,
-
-```bash
-$ npm test
-```
-
-Build library via `father`,
-
-```bash
-$ npm run build
-```
+> A React.js upload component powered by [simple-uploader.js](https://github.com/simple-uploader/Uploader)
