@@ -5,7 +5,7 @@
 #### 使用
 
 ```ts
-import { Uploader, UploaderFiles } from 'react-simple-uploader';
+import { Uploader, UploaderFiles } from "react-simple-uploader";
 
 <Uploader>{({ fileList }) => <UploaderFiles fileList={fileList} />}</Uploader>;
 ```

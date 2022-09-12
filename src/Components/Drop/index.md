@@ -5,7 +5,7 @@
 #### 使用
 
 ```ts
-import { UploaderDrop, UploaderBtn } from 'react-simple-uploader';
+import { UploaderDrop, UploaderBtn } from "react-simple-uploader";
 
 <UploaderDrop>
   <p>拖拽文件上传</p>

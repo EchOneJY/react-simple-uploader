@@ -1,6 +1,6 @@
-import React from 'react';
-import UploaderFile from '../File';
-import './index.css';
+import React from "react";
+import UploaderFile from "../File";
+import "./index.css";
 
 type UploaderFilesType = {
   fileList: Record<string, any>;

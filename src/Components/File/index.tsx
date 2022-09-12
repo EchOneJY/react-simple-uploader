@@ -1,9 +1,9 @@
-import classNames from 'classnames';
-import React, { Fragment, useEffect, useRef, useState } from 'react';
-import Uploader from 'simple-uploader.js';
-import { secondsToStr } from '../utils';
-import events from './file-events';
-import './index.css';
+import classNames from "classnames";
+import React, { Fragment, useEffect, useRef, useState } from "react";
+import Uploader from "simple-uploader.js";
+import { secondsToStr } from "../../utils";
+import events from "./file-events";
+import "./index.css";
 
 export type ProgressStyleType = {
   progress?: string;
@@ -27,14 +27,14 @@ export default function ChunkUploadFile(props: FileType) {
   let handlers: Recordable = {};
   const tid = useRef<any>(null);
 
-  const [iconType, setIconType] = useState('');
-  const [status, setStatus] = useState('');
-  const [statusText, setStatusText] = useState('');
+  const [iconType, setIconType] = useState("");
+  const [status, setStatus] = useState("");
+  const [statusText, setStatusText] = useState("");
   const [progressStyle, setProgressStyle] = useState<ProgressStyleType>({});
-  const [progressingClass, setProgressingClass] = useState('');
-  const [formatedAverageSpeed, setFormatedAverageSpeed] = useState('');
-  const [formatedTimeRemaining, setFormatedTimeRemaining] = useState('');
-  const [response, setResponse] = useState('');
+  const [progressingClass, setProgressingClass] = useState("");
+  const [formatedAverageSpeed, setFormatedAverageSpeed] = useState("");
+  const [formatedTimeRemaining, setFormatedTimeRemaining] = useState("");
+  const [response, setResponse] = useState("");
   const [paused, setPaused] = useState(false);
   const [error, setError] = useState(false);
   const [averageSpeed, setAverageSpeed] = useState(0);
@@ -42,35 +42,35 @@ export default function ChunkUploadFile(props: FileType) {
   const [isComplete, setIsComplete] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
   const [size, setSize] = useState(0);
-  const [formatedSize, setFormatedSize] = useState('');
+  const [formatedSize, setFormatedSize] = useState("");
   const [uploadedSize, setUploadedSize] = useState(0);
   const [progress, setProgress] = useState(0);
   const [timeRemaining, setTimeRemaining] = useState(0);
-  const [type, setType] = useState('');
-  const [extension, setExtension] = useState('');
+  const [type, setType] = useState("");
+  const [extension, setExtension] = useState("");
 
   function fileCategory() {
     const isFolder = file.isFolder;
-    let type = isFolder ? 'folder' : 'unknown';
+    let type = isFolder ? "folder" : "unknown";
     const categoryMap = file.uploader.opts.categoryMap;
     const typeMap = categoryMap || {
-      image: ['gif', 'jpg', 'jpeg', 'png', 'bmp', 'webp'],
-      video: ['mp4', 'm3u8', 'rmvb', 'avi', 'swf', '3gp', 'mkv', 'flv'],
-      audio: ['mp3', 'wav', 'wma', 'ogg', 'aac', 'flac'],
+      image: ["gif", "jpg", "jpeg", "png", "bmp", "webp"],
+      video: ["mp4", "m3u8", "rmvb", "avi", "swf", "3gp", "mkv", "flv"],
+      audio: ["mp3", "wav", "wma", "ogg", "aac", "flac"],
       document: [
-        'doc',
-        'txt',
-        'docx',
-        'pages',
-        'epub',
-        'pdf',
-        'numbers',
-        'csv',
-        'xls',
-        'xlsx',
-        'keynote',
-        'ppt',
-        'pptx',
+        "doc",
+        "txt",
+        "docx",
+        "pages",
+        "epub",
+        "pdf",
+        "numbers",
+        "csv",
+        "xls",
+        "xlsx",
+        "keynote",
+        "ppt",
+        "pptx",
       ],
     };
     Object.keys(typeMap).forEach((_type) => {
@@ -87,19 +87,19 @@ export default function ChunkUploadFile(props: FileType) {
 
   function getStatusText() {
     if (isComplete) {
-      setStatus('success');
+      setStatus("success");
     } else if (error) {
-      setStatus('error');
+      setStatus("error");
     } else if (isUploading) {
-      setStatus('uploading');
+      setStatus("uploading");
     } else if (paused) {
-      setStatus('paused');
+      setStatus("paused");
     } else {
-      setStatus('waiting');
+      setStatus("waiting");
     }
     const fileStatusText = file.uploader.fileStatusText;
     let txt = status;
-    if (typeof fileStatusText === 'function') {
+    if (typeof fileStatusText === "function") {
       txt = fileStatusText(status, response);
     } else {
       txt = fileStatusText[status];
@@ -113,7 +113,7 @@ export default function ChunkUploadFile(props: FileType) {
   function getProgressStyle() {
     const curProgress = Math.floor(progress * 100);
     const style = `translateX(${Math.floor(curProgress - 100)}%)`;
-    console.log('progress', style);
+    console.log("progress", style);
     setProgressStyle({
       progress: `${curProgress}%`,
       WebkitTransform: style,
@@ -127,13 +127,13 @@ export default function ChunkUploadFile(props: FileType) {
   }, [progress]);
 
   function getProgressClass() {
-    if (status === 'uploading') {
+    if (status === "uploading") {
       tid.current = setTimeout(() => {
-        setProgressingClass('uploader-file-progressing');
+        setProgressingClass("uploader-file-progressing");
       }, 200);
     } else {
       clearTimeout(tid.current);
-      setProgressingClass('');
+      setProgressingClass("");
     }
   }
   useEffect(() => {
@@ -149,12 +149,15 @@ export default function ChunkUploadFile(props: FileType) {
 
   function getFormatedTimeRemaining() {
     if (timeRemaining === Number.POSITIVE_INFINITY || timeRemaining === 0) {
-      return '';
+      return "";
     }
     let parsedTimeRemaining = secondsToStr(timeRemaining);
     const parseTimeRemaining = file.uploader.opts.parseTimeRemaining;
     if (parseTimeRemaining) {
-      parsedTimeRemaining = parseTimeRemaining(timeRemaining, parsedTimeRemaining);
+      parsedTimeRemaining = parseTimeRemaining(
+        timeRemaining,
+        parsedTimeRemaining
+      );
     }
     setFormatedTimeRemaining(parsedTimeRemaining);
   }
@@ -185,8 +188,12 @@ export default function ChunkUploadFile(props: FileType) {
     _actionCheck();
   }
 
-  function _fileSuccess(rootFile?: Recordable, file?: Recordable, message?: string) {
-    console.log('_fileSuccess');
+  function _fileSuccess(
+    rootFile?: Recordable,
+    file?: Recordable,
+    message?: string
+  ) {
+    console.log("_fileSuccess");
     if (rootFile && message) {
       processResponse(message);
     }
@@ -200,7 +207,11 @@ export default function ChunkUploadFile(props: FileType) {
     _fileSuccess();
   }
 
-  function _fileError(rootFile?: Recordable, file?: Recordable, message?: string) {
+  function _fileError(
+    rootFile?: Recordable,
+    file?: Recordable,
+    message?: string
+  ) {
     if (message) processResponse(message);
     _fileProgress();
     setError(true);
@@ -239,7 +250,7 @@ export default function ChunkUploadFile(props: FileType) {
     const rootFile = args[0];
     const target = list ? rootFile : args[1];
     if (file === target) {
-      if (list && event === 'fileSuccess') {
+      if (list && event === "fileSuccess") {
         processResponse(args[2]);
         return;
       }
@@ -250,62 +261,62 @@ export default function ChunkUploadFile(props: FileType) {
   useEffect(() => {
     const staticProps = [
       {
-        key: 'paused',
+        key: "paused",
         setState: setPaused,
       },
       {
-        key: 'error',
+        key: "error",
         setState: setError,
       },
       {
-        key: 'averageSpeed',
+        key: "averageSpeed",
         setState: setAverageSpeed,
       },
       {
-        key: 'currentSpeed',
+        key: "currentSpeed",
         setState: setCurrentSpeed,
       },
     ];
     const fnProps = [
       {
-        key: 'isComplete',
+        key: "isComplete",
         setState: setIsComplete,
       },
       {
-        key: 'isUploading',
+        key: "isUploading",
         setState: setIsUploading,
       },
       {
-        key: 'size',
+        key: "size",
         setState: setSize,
-        fn: 'getSize',
+        fn: "getSize",
       },
       {
-        key: 'formatedSize',
+        key: "formatedSize",
         setState: setFormatedSize,
-        fn: 'getFormatSize',
+        fn: "getFormatSize",
       },
       {
-        key: 'uploadedSize',
+        key: "uploadedSize",
         setState: setUploadedSize,
-        fn: 'sizeUploaded',
+        fn: "sizeUploaded",
       },
       {
-        key: 'progress',
+        key: "progress",
         setState: setProgress,
       },
       {
-        key: 'timeRemaining',
+        key: "timeRemaining",
         setState: setTimeRemaining,
       },
       {
-        key: 'type',
-        fn: 'getType',
+        key: "type",
+        fn: "getType",
         setState: setType,
       },
       {
-        key: 'extension',
-        fn: 'getExtension',
+        key: "extension",
+        fn: "getExtension",
         setState: setExtension,
       },
     ];
@@ -341,7 +352,7 @@ export default function ChunkUploadFile(props: FileType) {
   }, []);
 
   return (
-    <div className={classNames('uploader-file', status)}>
+    <div className={classNames("uploader-file", status)}>
       {children ? (
         children({
           file,
@@ -370,19 +381,19 @@ export default function ChunkUploadFile(props: FileType) {
       ) : (
         <Fragment>
           <div
-            className={classNames('uploader-file-progress', progressingClass)}
+            className={classNames("uploader-file-progress", progressingClass)}
             style={{ ...progressStyle }}
           />
           <div className="uploader-file-info">
             <div className="uploader-file-name">
-              <i className={classNames('uploader-file-icon', iconType)} />
-              {file.name || ''}
+              <i className={classNames("uploader-file-icon", iconType)} />
+              {file.name || ""}
             </div>
             <div className="uploader-file-size">{formatedSize}</div>
             <div className="uploader-file-meta" />
             <div className="uploader-file-status">
-              {status !== 'uploading' ? <span>{statusText}</span> : null}
-              {status === 'uploading' ? (
+              {status !== "uploading" ? <span>{statusText}</span> : null}
+              {status === "uploading" ? (
                 <span>
                   <span>{progressStyle.progress} </span>
                   <em>{formatedAverageSpeed} </em>

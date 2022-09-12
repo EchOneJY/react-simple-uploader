@@ -1,24 +1,29 @@
-import React, { useState, useEffect, Fragment, useImperativeHandle } from 'react';
+import React, {
+  useState,
+  useEffect,
+  Fragment,
+  useImperativeHandle,
+} from "react";
 
-import SimpleUploader from 'simple-uploader.js';
+import SimpleUploader from "simple-uploader.js";
 
-import UploaderList from '../List';
-import UploaderDrop from '../Drop';
-import UploaderBtn from '../Btn';
-import UploaderUnsupport from '../Unsupport';
+import UploaderList from "../List";
+import UploaderDrop from "../Drop";
+import UploaderBtn from "../Btn";
+import UploaderUnsupport from "../Unsupport";
 
-import UploaderContext from './UploaderContext';
-import './index.css';
-import { camelCase } from '../utils';
+import UploaderContext from "./UploaderContext";
+import "./index.css";
+import { camelCase } from "../../utils";
 
 type Recordable<T = any> = Record<string, T>;
 
 export type StatusType = {
-  success: 'string';
-  error: 'string';
-  uploading: 'string';
-  paused: 'string';
-  waiting: 'string';
+  success: "string";
+  error: "string";
+  uploading: "string";
+  paused: "string";
+  waiting: "string";
 };
 
 export type UploaderProps = {
@@ -30,25 +35,26 @@ export type UploaderProps = {
 };
 
 enum UploadEventEnum {
-  FILE_ADDED_EVENT = 'fileAdded',
-  FILES_ADDED_EVENT = 'filesAdded',
-  UPLOAD_START_EVENT = 'uploadStart',
+  FILE_ADDED_EVENT = "fileAdded",
+  FILES_ADDED_EVENT = "filesAdded",
+  UPLOAD_START_EVENT = "uploadStart",
 }
 
 const defaultOptions = {
   //目标上传 URL，默认POST
-  target: '',
+  target: "",
   //分块大小(单位：字节)
-  chunkSize: '2048000',
+  chunkSize: "2048000",
   //上传文件时文件内容的参数名，对应chunk里的Multipart对象名，默认对象名为file
-  fileParameterName: 'file',
+  fileParameterName: "file",
   //失败后最多自动重试上传次数
   maxChunkRetries: 3,
   //是否开启服务器分片校验，对应GET类型同名的target URL
   testChunks: true,
 };
 
-const { FILE_ADDED_EVENT, FILES_ADDED_EVENT, UPLOAD_START_EVENT } = UploadEventEnum;
+const { FILE_ADDED_EVENT, FILES_ADDED_EVENT, UPLOAD_START_EVENT } =
+  UploadEventEnum;
 
 const Uploader = React.forwardRef((props: UploaderProps, ref) => {
   const { options, fileStatusText, children } = props;
@@ -60,11 +66,11 @@ const Uploader = React.forwardRef((props: UploaderProps, ref) => {
 
   let uploader = new SimpleUploader({ ...defaultOptions, ...options });
   uploader.fileStatusText = fileStatusText || {
-    success: '上传成功',
-    error: '上传失败',
-    uploading: '上传中',
-    paused: '暂停',
-    waiting: '等待上传',
+    success: "上传成功",
+    error: "上传失败",
+    uploading: "上传中",
+    paused: "暂停",
+    waiting: "等待上传",
   };
 
   function uploadStart() {
@@ -122,7 +128,7 @@ const Uploader = React.forwardRef((props: UploaderProps, ref) => {
     const EVENTSMAP: Recordable<boolean | string> = {
       [FILE_ADDED_EVENT]: true,
       [FILES_ADDED_EVENT]: true,
-      [UPLOAD_START_EVENT]: 'uploadStart',
+      [UPLOAD_START_EVENT]: "uploadStart",
     };
     const handler = EVENTSMAP[name];
     if (handler) {
@@ -137,11 +143,11 @@ const Uploader = React.forwardRef((props: UploaderProps, ref) => {
     }
   }
 
-  uploader.on('catchAll', allEvent);
+  uploader.on("catchAll", allEvent);
   uploader.on(FILE_ADDED_EVENT, fileAdded);
   uploader.on(FILES_ADDED_EVENT, filesAdded);
-  uploader.on('fileRemoved', fileRemoved);
-  uploader.on('filesSubmitted', filesSubmitted);
+  uploader.on("fileRemoved", fileRemoved);
+  uploader.on("filesSubmitted", filesSubmitted);
 
   /**
    * 暴露ref方法
@@ -153,17 +159,19 @@ const Uploader = React.forwardRef((props: UploaderProps, ref) => {
   useEffect(() => {
     // const uploaderInner = uploader.uploader;
     return () => {
-      uploader.off('catchAll', allEvent);
+      uploader.off("catchAll", allEvent);
       uploader.off(FILE_ADDED_EVENT, fileAdded);
       uploader.off(FILES_ADDED_EVENT, filesAdded);
-      uploader.off('fileRemoved', fileRemoved);
-      uploader.off('filesSubmitted', filesSubmitted);
+      uploader.off("fileRemoved", fileRemoved);
+      uploader.off("filesSubmitted", filesSubmitted);
       uploader = null;
     };
   }, []);
 
   return (
-    <UploaderContext.Provider value={{ uploader, support: uploader.uploader.support }}>
+    <UploaderContext.Provider
+      value={{ uploader, support: uploader.uploader.support }}
+    >
       {
         <div className="uploader">
           {children ? (

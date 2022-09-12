@@ -5,8 +5,8 @@
 使用:
 
 ```ts
-import React from 'react';
-import { UploaderUnsupport } from 'react-simple-uploader';
+import React from "react";
+import { UploaderUnsupport } from "react-simple-uploader";
 
 export default () => <UploaderUnsupport />;
 ```
