@@ -1,7 +1,5 @@
 ## 介绍
 
-### [📚 Usage →](https://echonejy.github.io/react-simple-uploader/)
-
 ## 特性
 
 - 支持文件、多文件、文件夹上传

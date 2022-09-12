@@ -1,6 +1,6 @@
 {
   "name": "react-simple-uploader",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "A React Upload Component Powerd By simple-uploader.js",
   "main": "lib/index.js",
   "private": false,
@@ -11,7 +11,9 @@
   "author": "echone",
   "repository": {
     "type": "git",
-    "url": "git@github.com:EchOneJY/react-chunk-uploader"
+    "url": "git@github.com:EchOneJY/react-chunk-uploader",
+    "branch": "dev",
+    "platform": "github"
   },
   "keywords": [
     "react",
