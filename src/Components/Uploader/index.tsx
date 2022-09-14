@@ -3,6 +3,7 @@ import React, {
   useEffect,
   Fragment,
   useImperativeHandle,
+  useRef,
 } from "react";
 
 import SimpleUploader from "simple-uploader.js";
@@ -59,13 +60,15 @@ const { FILE_ADDED_EVENT, FILES_ADDED_EVENT, UPLOAD_START_EVENT } =
 const Uploader = React.forwardRef((props: UploaderProps, ref) => {
   const { options, fileStatusText, children } = props;
 
-  // const [uploader, setUploader] = useState<Recordable>({});
+  // const [uploaderRef.current, setUploader] = useState<Recordable>({});
   const [started, setStarted] = useState(false);
   const [files, setFiles] = useState<Recordable[]>([]);
   const [fileList, setFileList] = useState<Recordable[]>([]);
+  const uploaderRef = useRef(
+    new SimpleUploader({ ...defaultOptions, ...options })
+  );
 
-  let uploader = new SimpleUploader({ ...defaultOptions, ...options });
-  uploader.fileStatusText = fileStatusText || {
+  uploaderRef.current.fileStatusText = fileStatusText || {
     success: "上传成功",
     error: "上传失败",
     uploading: "上传中",
@@ -98,8 +101,8 @@ const Uploader = React.forwardRef((props: UploaderProps, ref) => {
   }
 
   function fileRemoved() {
-    setFiles(uploader.files);
-    setFileList(uploader.fileList);
+    setFiles(uploaderRef.current.files);
+    setFileList(uploaderRef.current.fileList);
   }
 
   function filesSubmitted(files: Recordable[], fileList: Recordable[]) {
@@ -111,7 +114,7 @@ const Uploader = React.forwardRef((props: UploaderProps, ref) => {
       setFileList([]);
     }
     if (props.autoStart) {
-      uploader.upload();
+      uploaderRef.current.upload();
     }
   }
 
@@ -143,34 +146,44 @@ const Uploader = React.forwardRef((props: UploaderProps, ref) => {
     }
   }
 
-  uploader.on("catchAll", allEvent);
-  uploader.on(FILE_ADDED_EVENT, fileAdded);
-  uploader.on(FILES_ADDED_EVENT, filesAdded);
-  uploader.on("fileRemoved", fileRemoved);
-  uploader.on("filesSubmitted", filesSubmitted);
+  uploaderRef.current.on("catchAll", allEvent);
+  uploaderRef.current.on(FILE_ADDED_EVENT, fileAdded);
+  uploaderRef.current.on(FILES_ADDED_EVENT, filesAdded);
+  uploaderRef.current.on("fileRemoved", fileRemoved);
+  uploaderRef.current.on("filesSubmitted", filesSubmitted);
 
   /**
    * 暴露ref方法
    */
   useImperativeHandle(ref, () => ({
-    getUploader: () => uploader,
+    getUploader: () => uploaderRef.current,
   }));
 
   useEffect(() => {
-    // const uploaderInner = uploader.uploader;
+    uploaderRef.current.fileStatusText = fileStatusText || {
+      success: "上传成功",
+      error: "上传失败",
+      uploading: "上传中",
+      paused: "暂停",
+      waiting: "等待上传",
+    };
+
     return () => {
-      uploader.off("catchAll", allEvent);
-      uploader.off(FILE_ADDED_EVENT, fileAdded);
-      uploader.off(FILES_ADDED_EVENT, filesAdded);
-      uploader.off("fileRemoved", fileRemoved);
-      uploader.off("filesSubmitted", filesSubmitted);
-      uploader = null;
+      uploaderRef.current.off("catchAll", allEvent);
+      uploaderRef.current.off(FILE_ADDED_EVENT, fileAdded);
+      uploaderRef.current.off(FILES_ADDED_EVENT, filesAdded);
+      uploaderRef.current.off("fileRemoved", fileRemoved);
+      uploaderRef.current.off("filesSubmitted", filesSubmitted);
+      uploaderRef.current = null;
     };
   }, []);
 
   return (
     <UploaderContext.Provider
-      value={{ uploader, support: uploader.uploader.support }}
+      value={{
+        uploaderRef,
+        support: uploaderRef.current.support,
+      }}
     >
       {
         <div className="uploader">

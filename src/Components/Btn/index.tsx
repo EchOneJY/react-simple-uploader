@@ -18,8 +18,12 @@ const UploaderBtn = (
   const { directory, single, attrs, children } = props;
 
   useEffect(() => {
-    const uploader = contextValue.uploader;
-    uploader.assignBrowse(btnDom.current, directory, single, attrs);
+    contextValue.uploaderRef?.current?.assignBrowse(
+      btnDom.current,
+      directory,
+      single,
+      attrs
+    );
   }, []);
 
   return (

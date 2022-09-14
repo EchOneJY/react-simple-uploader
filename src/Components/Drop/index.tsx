@@ -18,17 +18,20 @@ export default function UploaderDrop(props: UploaderDropType) {
   const onDrop = () => setDropClass("uploader-droped");
 
   useEffect(() => {
-    const uploader = contextValue.uploader;
-    uploader.assignDrop(dropDom.current);
-    uploader.on("dragenter", onDragEnter);
-    uploader.on("dragleave", onDragLeave);
-    uploader.on("drop", onDrop);
+    let uploader = contextValue.uploaderRef?.current;
+    uploader?.assignDrop(dropDom.current);
+    uploader?.on("dragenter", onDragEnter);
+    uploader?.on("dragleave", onDragLeave);
+    uploader?.on("drop", onDrop);
 
     return () => {
-      uploader.off("dragenter", onDragEnter);
-      uploader.off("dragleave", onDragLeave);
-      uploader.off("drop", onDrop);
-      uploader.unAssignDrop(dropDom.current);
+      uploader?.off("dragenter", onDragEnter);
+      uploader?.off("dragleave", onDragLeave);
+      uploader?.off("drop", onDrop);
+      if (dropDom.current) {
+        uploader?.unAssignDrop(dropDom.current);
+      }
+      uploader = null;
     };
   }, []);
 

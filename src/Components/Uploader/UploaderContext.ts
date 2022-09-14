@@ -1,12 +1,11 @@
 import React from "react";
 
 export type UploaderContextProps = {
-  uploader: Record<string, any>;
+  uploaderRef?: React.MutableRefObject<Record<string, any> | null>;
   support: boolean;
 };
 
 const UploaderContext = React.createContext<UploaderContextProps>({
-  uploader: {},
   support: true,
 });
 
