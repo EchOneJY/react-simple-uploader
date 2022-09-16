@@ -1,4 +1,6 @@
-.uploader-btn {
+@import "../style/index";
+
+.@{prefix-cls}-btn {
   position: relative;
   display: inline-block;
   padding: 4px 8px;
@@ -11,11 +13,11 @@
   outline: none;
   cursor: pointer;
 
-  &.hidden {
+  &-hidden {
     display: none;
   }
-}
 
-.uploader-btn:hover {
-  background-color: rgba(0, 0, 0, 0.8%);
+  &:hover {
+    background-color: white;
+  }
 }

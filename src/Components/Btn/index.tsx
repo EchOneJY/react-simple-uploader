@@ -1,6 +1,6 @@
 import React, { createRef, useEffect } from "react";
 import classNames from "classnames";
-import "./index.css";
+import "./index.less";
 
 import { UploaderContext } from "../../index";
 
@@ -14,11 +14,14 @@ const UploaderBtn = (
   props: UploaderBtnType = { directory: false, single: false, attrs: {} }
 ) => {
   const btnDom = createRef<HTMLLabelElement>();
-  const contextValue = React.useContext(UploaderContext);
-  const { directory, single, attrs, children } = props;
+  const { getPrefixCls, uploaderRef, support } =
+    React.useContext(UploaderContext);
+  const { className, style, directory, single, attrs, children } = props;
+
+  const prefixCls = getPrefixCls("btn");
 
   useEffect(() => {
-    contextValue.uploaderRef?.current?.assignBrowse(
+    uploaderRef?.current?.assignBrowse(
       btnDom.current,
       directory,
       single,
@@ -28,7 +31,14 @@ const UploaderBtn = (
 
   return (
     <label
-      className={classNames("uploader-btn", { hidden: !contextValue.support })}
+      className={classNames(
+        prefixCls,
+        {
+          [`${prefixCls}-hidden`]: !support,
+        },
+        className
+      )}
+      style={style}
       ref={btnDom}
     >
       {children}

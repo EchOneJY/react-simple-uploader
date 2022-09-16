@@ -1,16 +1,19 @@
-.uploader-drop {
+@import "../style/index";
+
+.@{prefix-cls}-drop {
   position: relative;
   padding: 10px;
   overflow: hidden;
   background-color: #f5f5f5;
   border: 1px dashed #ccc;
 
-  &.hidden {
+  &-hidden {
     display: none;
   }
-}
 
-.uploader-dragover {
-  background-color: #f7f7f7;
-  border-color: #999;
+  &-drop,
+  &-dragover {
+    background-color: #f7f7f7;
+    border-color: #999;
+  }
 }

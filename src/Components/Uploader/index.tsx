@@ -7,14 +7,14 @@ import React, {
 } from "react";
 
 import SimpleUploader from "simple-uploader.js";
-
+import classNames from "classnames";
 import UploaderList from "../List";
 import UploaderDrop from "../Drop";
 import UploaderBtn from "../Btn";
 import UploaderUnsupport from "../Unsupport";
 
-import UploaderContext from "./UploaderContext";
-import "./index.css";
+import UploaderContext, { defaultGetPrefixCls } from "./UploaderContext";
+import "./index.less";
 import { camelCase } from "../../utils";
 
 type Recordable<T = any> = Record<string, T>;
@@ -33,6 +33,8 @@ export type UploaderProps = {
   fileStatusText: StatusType;
   children: (props: Recordable) => React.ReactNode;
   [key: string]: any;
+  className?: string;
+  style?: React.CSSProperties;
 };
 
 enum UploadEventEnum {
@@ -58,9 +60,10 @@ const { FILE_ADDED_EVENT, FILES_ADDED_EVENT, UPLOAD_START_EVENT } =
   UploadEventEnum;
 
 const Uploader = React.forwardRef((props: UploaderProps, ref) => {
-  const { options, fileStatusText, children } = props;
+  const { className, style, options, fileStatusText, children } = props;
 
-  // const [uploaderRef.current, setUploader] = useState<Recordable>({});
+  const prefixCls = defaultGetPrefixCls("");
+
   const [started, setStarted] = useState(false);
   const [files, setFiles] = useState<Recordable[]>([]);
   const [fileList, setFileList] = useState<Recordable[]>([]);
@@ -181,12 +184,16 @@ const Uploader = React.forwardRef((props: UploaderProps, ref) => {
   return (
     <UploaderContext.Provider
       value={{
+        getPrefixCls: defaultGetPrefixCls,
         uploaderRef,
         support: uploaderRef.current.support,
       }}
     >
       {
-        <div className="uploader">
+        <div
+          className={classNames(`${prefixCls}-wrapper`, className)}
+          style={style}
+        >
           {children ? (
             children({ fileList, files, started })
           ) : (

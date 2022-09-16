@@ -1,16 +1,18 @@
 import React, { Fragment } from "react";
-import "./index.css";
+import classNames from "classnames";
+import "./index.less";
 
 import { UploaderContext } from "../../index";
 
 type UploaderUnsupportType = React.HTMLAttributes<HTMLDivElement>;
 
 export default function UploaderUnsupport(props: UploaderUnsupportType) {
-  const { children } = props;
-  const contextValue = React.useContext(UploaderContext);
+  const { className, style, children } = props;
+  const { getPrefixCls, support } = React.useContext(UploaderContext);
+  const prefixCls = getPrefixCls("unsupport");
 
-  return !contextValue.support ? (
-    <div className="uploader-unsupport">
+  return !support ? (
+    <div className={classNames(prefixCls, className)} style={style}>
       {children ? (
         <Fragment>{children}</Fragment>
       ) : (

@@ -1,16 +1,23 @@
 import React from "react";
+import classNames from "classnames";
+import { UploaderContext } from "../../index";
 import UploaderFile from "../File";
-import "./index.css";
+import "./index.less";
 
 type UploaderListType = {
+  className?: string;
+  style?: React.CSSProperties;
   fileList: Record<string, any>;
   children?: (props: { fileList: any }) => React.ReactNode;
 };
 
-export default function UploaderList(props: UploaderListType) {
-  const { fileList, children } = props;
+export default (props: UploaderListType) => {
+  const { className, style, fileList, children } = props;
+  const { getPrefixCls } = React.useContext(UploaderContext);
+  const prefixCls = getPrefixCls("list");
+
   return (
-    <div className="uploader-list">
+    <div className={classNames(prefixCls, className)} style={style}>
       {children ? (
         children({ fileList })
       ) : (
@@ -22,4 +29,4 @@ export default function UploaderList(props: UploaderListType) {
       )}
     </div>
   );
-}
+};

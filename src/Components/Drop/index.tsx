@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import React, { createRef, useEffect, useState } from "react";
-import "./index.css";
+import "./index.less";
 
 import { UploaderContext } from "../../index";
 
@@ -8,17 +8,19 @@ type UploaderDropType = React.HTMLAttributes<HTMLDivElement>;
 
 export default function UploaderDrop(props: UploaderDropType) {
   const dropDom = createRef<HTMLDivElement>();
-  const contextValue = React.useContext(UploaderContext);
-  const { children } = props;
+  const { getPrefixCls, uploaderRef, support } =
+    React.useContext(UploaderContext);
+  const prefixCls = getPrefixCls("drop");
+  const { className, style, children } = props;
 
   const [dropClass, setDropClass] = useState("");
 
-  const onDragEnter = () => setDropClass("uploader-dragover");
+  const onDragEnter = () => setDropClass(`${prefixCls}-dragover`);
   const onDragLeave = () => setDropClass("");
-  const onDrop = () => setDropClass("uploader-droped");
+  const onDrop = () => setDropClass(`${prefixCls}-droped`);
 
   useEffect(() => {
-    let uploader = contextValue.uploaderRef?.current;
+    let uploader = uploaderRef?.current;
     uploader?.assignDrop(dropDom.current);
     uploader?.on("dragenter", onDragEnter);
     uploader?.on("dragleave", onDragLeave);
@@ -37,9 +39,15 @@ export default function UploaderDrop(props: UploaderDropType) {
 
   return (
     <div
-      className={classNames("uploader-drop", dropClass, {
-        hidden: !contextValue.support,
-      })}
+      className={classNames(
+        prefixCls,
+        dropClass,
+        {
+          [`${prefixCls}-hidden`]: !support,
+        },
+        className
+      )}
+      style={style}
       ref={dropDom}
     >
       {children}

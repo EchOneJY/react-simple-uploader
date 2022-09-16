@@ -3,14 +3,14 @@
 示例:
 
 ```tsx
-import React, { Fragment, useRef, useEffect } from 'react';
+import React, { Fragment, useRef, useEffect } from "react";
 import {
   Uploader,
   UploaderUnsupport,
   UploaderDrop,
   UploaderBtn,
   UploaderList,
-} from 'react-simple-uploader';
+} from "react-simple-uploader";
 
 export default () => {
   const uploader = useRef(null);
@@ -39,14 +39,14 @@ export default () => {
 #### 使用
 
 ```ts
-import React, { Fragment, useRef, useEffect } from 'react';
+import React, { Fragment, useRef, useEffect } from "react";
 import {
   Uploader,
   UploaderUnsupport,
   UploaderDrop,
   UploaderBtn,
   UploaderList,
-} from 'react-simple-uploader';
+} from "react-simple-uploader";
 
 export default () => {
   const uploader = useRef(null);

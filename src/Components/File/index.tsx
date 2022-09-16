@@ -1,9 +1,10 @@
 import classNames from "classnames";
 import React, { Fragment, useEffect, useRef, useState } from "react";
 import Uploader from "simple-uploader.js";
+import { UploaderContext } from "../../index";
 import { secondsToStr } from "../../utils";
 import events from "./file-events";
-import "./index.css";
+import "./index.less";
 
 export type ProgressStyleType = {
   progress?: string;
@@ -16,13 +17,18 @@ export type ProgressStyleType = {
 type Recordable<T = any> = Record<string, T>;
 
 export type FileType = {
+  style?: React.CSSProperties;
+  className?: string;
   file: Recordable;
   list: boolean;
   children?: (props: Recordable) => React.ReactNode;
 };
 
 export default function ChunkUploadFile(props: FileType) {
-  const { file, list = true, children } = props;
+  const { className, style, file, list = true, children } = props;
+  const { getPrefixCls } = React.useContext(UploaderContext);
+
+  const prefixCls = getPrefixCls("file");
 
   let handlers: Recordable = {};
   const tid = useRef<any>(null);
@@ -352,7 +358,7 @@ export default function ChunkUploadFile(props: FileType) {
   }, []);
 
   return (
-    <div className={classNames("uploader-file", status)}>
+    <div className={classNames(prefixCls, status, className)} style={style}>
       {children ? (
         children({
           file,
@@ -381,17 +387,17 @@ export default function ChunkUploadFile(props: FileType) {
       ) : (
         <Fragment>
           <div
-            className={classNames("uploader-file-progress", progressingClass)}
+            className={classNames(`${prefixCls}-progress`, progressingClass)}
             style={{ ...progressStyle }}
           />
-          <div className="uploader-file-info">
-            <div className="uploader-file-name">
-              <i className={classNames("uploader-file-icon", iconType)} />
+          <div className={`${prefixCls}-info`}>
+            <div className={`${prefixCls}-name`}>
+              <i className={classNames(`${prefixCls}-icon`, iconType)} />
               {file.name || ""}
             </div>
-            <div className="uploader-file-size">{formatedSize}</div>
-            <div className="uploader-file-meta" />
-            <div className="uploader-file-status">
+            <div className={`${prefixCls}-size`}>{formatedSize}</div>
+            <div className={`${prefixCls}-meta`} />
+            <div className={`${prefixCls}-status`}>
               {status !== "uploading" ? <span>{statusText}</span> : null}
               {status === "uploading" ? (
                 <span>
@@ -401,11 +407,11 @@ export default function ChunkUploadFile(props: FileType) {
                 </span>
               ) : null}
             </div>
-            <div className="uploader-file-actions">
-              <span className="uploader-file-pause" onClick={pause} />
-              <span className="uploader-file-resume" onClick={resume} />
-              <span className="uploader-file-retry" onClick={retry} />
-              <span className="uploader-file-remove" onClick={remove} />
+            <div className={`${prefixCls}-actions`}>
+              <span className={`${prefixCls}-pause`} onClick={pause} />
+              <span className={`${prefixCls}-resume`} onClick={resume} />
+              <span className={`${prefixCls}-retry`} onClick={retry} />
+              <span className={`${prefixCls}-remove`} onClick={remove} />
             </div>
           </div>
         </Fragment>
