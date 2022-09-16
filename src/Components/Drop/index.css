@@ -1,0 +1,15 @@
+.rsu-drop {
+  position: relative;
+  padding: 10px;
+  overflow: hidden;
+  background-color: #f5f5f5;
+  border: 1px dashed #ccc;
+}
+.rsu-drop-hidden {
+  display: none;
+}
+.rsu-drop-drop,
+.rsu-drop-dragover {
+  background-color: #f7f7f7;
+  border-color: #999;
+}

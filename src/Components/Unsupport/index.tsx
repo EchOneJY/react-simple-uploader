@@ -1,6 +1,6 @@
 import React, { Fragment } from "react";
 import classNames from "classnames";
-import "./index.less";
+import "./index.css";
 
 import { UploaderContext } from "../../index";
 

@@ -1,6 +1,6 @@
 {
   "name": "react-simple-uploader",
-  "version": "0.2.8",
+  "version": "0.3.2",
   "description": "A React Upload Component Powerd By simple-uploader.js",
   "main": "lib/index.js",
   "private": false,

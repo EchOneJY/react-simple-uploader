@@ -2,7 +2,7 @@ import React from "react";
 import classNames from "classnames";
 import { UploaderContext } from "../../index";
 import UploaderFile from "../File";
-import "./index.less";
+import "./index.css";
 
 type UploaderListType = {
   className?: string;

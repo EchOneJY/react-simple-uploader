@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import React, { createRef, useEffect, useState } from "react";
-import "./index.less";
+import "./index.css";
 
 import { UploaderContext } from "../../index";
 

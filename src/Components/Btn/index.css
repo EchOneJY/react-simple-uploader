@@ -1,6 +1,4 @@
-@import "../style/variable.less";
-
-.@{prefix-cls}-btn {
+.rsu-btn {
   position: relative;
   display: inline-block;
   padding: 4px 8px;
@@ -12,12 +10,10 @@
   border-radius: 2px;
   outline: none;
   cursor: pointer;
-
-  &-hidden {
-    display: none;
-  }
-
-  &:hover {
-    background-color: white;
-  }
+}
+.rsu-btn-hidden {
+  display: none;
+}
+.rsu-btn:hover {
+  background-color: white;
 }

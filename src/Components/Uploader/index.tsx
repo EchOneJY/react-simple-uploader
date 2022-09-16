@@ -14,7 +14,7 @@ import UploaderBtn from "../Btn";
 import UploaderUnsupport from "../Unsupport";
 
 import UploaderContext, { defaultGetPrefixCls } from "./UploaderContext";
-import "./index.less";
+import "./index.css";
 import { camelCase } from "../../utils";
 
 type Recordable<T = any> = Record<string, T>;

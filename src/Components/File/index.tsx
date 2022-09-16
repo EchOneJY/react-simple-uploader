@@ -4,7 +4,7 @@ import Uploader from "simple-uploader.js";
 import { UploaderContext } from "../../index";
 import { secondsToStr } from "../../utils";
 import events from "./file-events";
-import "./index.less";
+import "./index.css";
 
 export type ProgressStyleType = {
   progress?: string;
@@ -135,7 +135,7 @@ export default function ChunkUploadFile(props: FileType) {
   function getProgressClass() {
     if (status === "uploading") {
       tid.current = setTimeout(() => {
-        setProgressingClass("uploader-file-progressing");
+        setProgressingClass(`${prefixCls}-progressing`);
       }, 200);
     } else {
       clearTimeout(tid.current);
