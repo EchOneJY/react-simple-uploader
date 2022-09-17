@@ -11,6 +11,7 @@ export { default as UploaderDrop } from "./Components/Drop";
 export { default as ChunkUploadFile } from "./Components/File";
 export { default as UploaderFiles } from "./Components/Files";
 export { default as UploaderList } from "./Components/List";
+export { default as UploaderFile } from "./Components/File";
 export { default as UploaderUnsupport } from "./Components/Unsupport";
 
 export { Uploader };

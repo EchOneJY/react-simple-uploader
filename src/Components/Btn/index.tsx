@@ -10,7 +10,7 @@ type UploaderBtnType = {
   attrs?: Record<string, any>;
 } & React.HTMLAttributes<HTMLLabelElement>;
 
-const UploaderBtn = (
+export default (
   props: UploaderBtnType = { directory: false, single: false, attrs: {} }
 ) => {
   const btnDom = createRef<HTMLLabelElement>();
@@ -45,5 +45,3 @@ const UploaderBtn = (
     </label>
   );
 };
-
-export default UploaderBtn;

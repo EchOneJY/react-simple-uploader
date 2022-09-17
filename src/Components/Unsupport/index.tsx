@@ -6,7 +6,7 @@ import { UploaderContext } from "../../index";
 
 type UploaderUnsupportType = React.HTMLAttributes<HTMLDivElement>;
 
-export default function UploaderUnsupport(props: UploaderUnsupportType) {
+export default (props: UploaderUnsupportType) => {
   const { className, style, children } = props;
   const { getPrefixCls, support } = React.useContext(UploaderContext);
   const prefixCls = getPrefixCls("unsupport");
@@ -29,4 +29,4 @@ export default function UploaderUnsupport(props: UploaderUnsupportType) {
       )}
     </div>
   ) : null;
-}
+};

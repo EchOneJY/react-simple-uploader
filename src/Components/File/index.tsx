@@ -24,7 +24,7 @@ export type FileType = {
   children?: (props: Recordable) => React.ReactNode;
 };
 
-export default function ChunkUploadFile(props: FileType) {
+export default (props: FileType) => {
   const { className, style, file, list = true, children } = props;
   const { getPrefixCls } = React.useContext(UploaderContext);
 
@@ -418,4 +418,4 @@ export default function ChunkUploadFile(props: FileType) {
       )}
     </div>
   );
-}
+};

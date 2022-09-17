@@ -2,6 +2,7 @@ import React, {
   useState,
   useEffect,
   Fragment,
+  forwardRef,
   useImperativeHandle,
   useRef,
 } from "react";
@@ -59,7 +60,7 @@ const defaultOptions = {
 const { FILE_ADDED_EVENT, FILES_ADDED_EVENT, UPLOAD_START_EVENT } =
   UploadEventEnum;
 
-const Uploader = React.forwardRef((props: UploaderProps, ref) => {
+export default forwardRef((props: UploaderProps, ref) => {
   const { className, style, options, fileStatusText, children } = props;
 
   const prefixCls = defaultGetPrefixCls("");
@@ -155,9 +156,6 @@ const Uploader = React.forwardRef((props: UploaderProps, ref) => {
   uploaderRef.current.on("fileRemoved", fileRemoved);
   uploaderRef.current.on("filesSubmitted", filesSubmitted);
 
-  /**
-   * 暴露ref方法
-   */
   useImperativeHandle(ref, () => ({
     getUploader: () => uploaderRef.current,
   }));
@@ -212,5 +210,3 @@ const Uploader = React.forwardRef((props: UploaderProps, ref) => {
     </UploaderContext.Provider>
   );
 });
-
-export default Uploader;

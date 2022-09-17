@@ -6,7 +6,7 @@ import { UploaderContext } from "../../index";
 
 type UploaderDropType = React.HTMLAttributes<HTMLDivElement>;
 
-export default function UploaderDrop(props: UploaderDropType) {
+export default (props: UploaderDropType) => {
   const dropDom = createRef<HTMLDivElement>();
   const { getPrefixCls, uploaderRef, support } =
     React.useContext(UploaderContext);
@@ -53,4 +53,4 @@ export default function UploaderDrop(props: UploaderDropType) {
       {children}
     </div>
   );
-}
+};
