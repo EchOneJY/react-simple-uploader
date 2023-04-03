@@ -12,5 +12,12 @@ export default defineConfig({
   hash: true,
   base: `/react-${repo}/`,
   publicPath: `/react-${repo}/`,
+  proxy: {
+    "/api": {
+      target: "https://test-ent.utrailer.cn/",
+      changeOrigin: true,
+      pathRewrite: { "^/api": "" },
+    },
+  },
   // more config: https://d.umijs.org/config
 });

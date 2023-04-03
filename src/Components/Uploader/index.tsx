@@ -150,12 +150,6 @@ export default forwardRef((props: UploaderProps, ref) => {
     }
   }
 
-  uploaderRef.current.on("catchAll", allEvent);
-  uploaderRef.current.on(FILE_ADDED_EVENT, fileAdded);
-  uploaderRef.current.on(FILES_ADDED_EVENT, filesAdded);
-  uploaderRef.current.on("fileRemoved", fileRemoved);
-  uploaderRef.current.on("filesSubmitted", filesSubmitted);
-
   useImperativeHandle(ref, () => ({
     getUploader: () => uploaderRef.current,
   }));
@@ -168,6 +162,12 @@ export default forwardRef((props: UploaderProps, ref) => {
       paused: "暂停",
       waiting: "等待上传",
     };
+
+    uploaderRef.current.on("catchAll", allEvent);
+    uploaderRef.current.on(FILE_ADDED_EVENT, fileAdded);
+    uploaderRef.current.on(FILES_ADDED_EVENT, filesAdded);
+    uploaderRef.current.on("fileRemoved", fileRemoved);
+    uploaderRef.current.on("filesSubmitted", filesSubmitted);
 
     return () => {
       uploaderRef.current.off("catchAll", allEvent);
